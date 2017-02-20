@@ -3,3 +3,22 @@ Please refer to http://www.aliyun.com/product/mns and  https://docs.aliyun.com/?
 
 ## Samples    
 You must fulfill the AccessId/AccessKey/AccountID in the example before running.   
+
+Installation
+------------
+
+The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+
+Either run
+
+```
+php composer.phar require --prefer-dist xutl/AliyunMNS "*"
+```
+
+or add
+
+```
+"xutl/AliyunMNS": "*"
+```
+
+to the require section of your `composer.json` file.
