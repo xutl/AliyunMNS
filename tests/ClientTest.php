@@ -1,6 +1,4 @@
 <?php
-require_once(dirname(dirname(__FILE__)).'/mns-autoloader.php');
-
 use AliyunMNS\Client;
 use AliyunMNS\Constants;
 use AliyunMNS\AsyncCallback;
