@@ -12,13 +12,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist xutl/AliyunMNS "*"
+php composer.phar require --prefer-dist xutl/AliyunMNS
 ```
 
 or add
 
 ```
-"xutl/AliyunMNS": "*"
+"xutl/AliyunMNS": "~1.3"
 ```
 
 to the require section of your `composer.json` file.
