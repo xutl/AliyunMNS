@@ -43,6 +43,7 @@ class Constants
     const ERROR_MESSAGE = "ErrorMessage";
     const ENDPOINT = "Endpoint";
     const STRATEGY = "NotifyStrategy";
+    const FILTER_TAG = "FilterTag";
     const CONTENT_FORMAT = "NotifyContentFormat";
     const LOGGING_BUCKET = "LoggingBucket";
     const LOGGING_ENABLED = "LoggingEnabled";
