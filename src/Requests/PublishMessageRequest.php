@@ -11,12 +11,13 @@ class PublishMessageRequest extends BaseRequest
 
     private $topicName;
 
-    public function __construct($messageBody, $messageAttributes = NULL)
+    public function __construct($messageBody, $messageTag, $messageAttributes = NULL)
     {
         parent::__construct('post', NULL);
 
         $this->topicName = NULL;
         $this->messageBody = $messageBody;
+        $this->messageTag = $messageTag;
         $this->messageAttributes = $messageAttributes;
     }
 
@@ -48,4 +49,5 @@ class PublishMessageRequest extends BaseRequest
         return NULL;
     }
 }
+
 ?>

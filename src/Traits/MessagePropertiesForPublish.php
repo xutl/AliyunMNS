@@ -7,6 +7,7 @@ use AliyunMNS\Model\MessageAttributes;
 trait MessagePropertiesForPublish
 {
     public $messageBody;
+    public $messageTag;
     public $messageAttributes;
 
     public function getMessageBody()
@@ -17,6 +18,16 @@ trait MessagePropertiesForPublish
     public function setMessageBody($messageBody)
     {
         $this->messageBody = $messageBody;
+    }
+
+    public function getMessageTag()
+    {
+        return $this->messageTag;
+    }
+
+    public function setMessageTag($messageTag)
+    {
+        $this->messageTag = $messageTag;
     }
 
     public function getMessageAttributes()
@@ -31,12 +42,13 @@ trait MessagePropertiesForPublish
 
     public function writeMessagePropertiesForPublishXML(\XMLWriter $xmlWriter)
     {
-        if ($this->messageBody != NULL)
-        {
+        if ($this->messageBody != NULL) {
             $xmlWriter->writeElement(Constants::MESSAGE_BODY, $this->messageBody);
         }
-        if ($this->messageAttributes !== NULL)
-        {
+        if ($this->messageTag != NULL) {
+            $xmlWriter->writeElement(Constants::MESSAGE_TAG, $this->messageTag);
+        }
+        if ($this->messageAttributes !== NULL) {
             $this->messageAttributes->writeXML($xmlWriter);
         }
     }
