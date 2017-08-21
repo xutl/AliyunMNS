@@ -11,7 +11,7 @@ class PublishMessageRequest extends BaseRequest
 
     private $topicName;
 
-    public function __construct($messageBody, $messageTag, $messageAttributes = NULL)
+    public function __construct($messageBody, $messageTag = NULL, $messageAttributes = NULL)
     {
         parent::__construct('post', NULL);
 
