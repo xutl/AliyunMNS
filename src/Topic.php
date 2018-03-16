@@ -3,7 +3,6 @@
 namespace AliyunMNS;
 
 use AliyunMNS\Http\HttpClient;
-use AliyunMNS\AsyncCallback;
 use AliyunMNS\Model\TopicAttributes;
 use AliyunMNS\Model\SubscriptionAttributes;
 use AliyunMNS\Model\UpdateSubscriptionAttributes;
