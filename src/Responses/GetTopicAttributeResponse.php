@@ -5,7 +5,6 @@ use AliyunMNS\Constants;
 use AliyunMNS\Model\TopicAttributes;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\TopicNotExistException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class GetTopicAttributeResponse extends BaseResponse
@@ -84,5 +83,3 @@ class GetTopicAttributeResponse extends BaseResponse
         }
     }
 }
-
-?>

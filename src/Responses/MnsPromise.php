@@ -2,8 +2,6 @@
 namespace AliyunMNS\Responses;
 
 use GuzzleHttp\Promise\PromiseInterface;
-use AliyunMNS\Responses\BaseResponse;
-use AliyunMNS\Exception\MnsException;
 use GuzzleHttp\Exception\TransferException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -46,5 +44,3 @@ class MnsPromise
         return $this->response;
     }
 }
-
-?>

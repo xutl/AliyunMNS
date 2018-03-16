@@ -26,5 +26,3 @@ trait MessageIdAndMD5
         $this->messageBodyMD5 = $message->getMessageBodyMD5();
     }
 }
-
-?>

@@ -31,7 +31,7 @@ class DeleteMessageErrorItem
         return $this->receiptHandle;
     }
 
-    static public function fromXML($xmlReader)
+    static public function fromXML(\XMLReader $xmlReader)
     {
         $errorCode = NULL;
         $errorMessage = NULL;
@@ -79,5 +79,3 @@ class DeleteMessageErrorItem
         return new DeleteMessageErrorItem($errorCode, $errorMessage, $receiptHandle);
     }
 }
-
-?>

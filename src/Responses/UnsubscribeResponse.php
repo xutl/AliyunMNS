@@ -2,7 +2,6 @@
 namespace AliyunMNS\Responses;
 
 use AliyunMNS\Exception\MnsException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class UnsubscribeResponse extends BaseResponse
@@ -44,5 +43,3 @@ class UnsubscribeResponse extends BaseResponse
         }
     }
 }
-
-?>

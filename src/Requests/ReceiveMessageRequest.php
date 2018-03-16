@@ -1,8 +1,6 @@
 <?php
-namespace AliyunMNS\Requests;
 
-use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
+namespace AliyunMNS\Requests;
 
 class ReceiveMessageRequest extends BaseRequest
 {
@@ -34,10 +32,8 @@ class ReceiveMessageRequest extends BaseRequest
 
     public function generateQueryString()
     {
-        if ($this->waitSeconds != NULL)
-        {
+        if ($this->waitSeconds != NULL) {
             return http_build_query(array("waitseconds" => $this->waitSeconds));
         }
     }
 }
-?>

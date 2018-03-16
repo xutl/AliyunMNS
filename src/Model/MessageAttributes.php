@@ -13,8 +13,7 @@ class MessageAttributes
     // if both SmsAttributes and BatchSmsAttributes are set, only one will take effect
     private $attributes;
 
-    public function __construct(
-        $attributes = NULL)
+    public function __construct($attributes = NULL)
     {
         $this->attributes = $attributes;
     }
@@ -32,22 +31,15 @@ class MessageAttributes
     public function writeXML(\XMLWriter $xmlWriter)
     {
         $xmlWriter->startELement(Constants::MESSAGE_ATTRIBUTES);
-        if ($this->attributes != NULL)
-        {
-            if (is_array($this->attributes))
-            {
-                foreach ($this->attributes as $subAttributes)
-                {
+        if ($this->attributes != NULL) {
+            if (is_array($this->attributes)) {
+                foreach ($this->attributes as $subAttributes) {
                     $subAttributes->writeXML($xmlWriter);
                 }
-            }
-            else
-            {
+            } else {
                 $this->attributes->writeXML($xmlWriter);
             }
         }
         $xmlWriter->endElement();
     }
 }
-
-?>

@@ -1,10 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
-use AliyunMNS\Model\TopicAttributes;
-
 class DeleteTopicRequest extends BaseRequest
 {
     private $topicName;
@@ -30,4 +26,3 @@ class DeleteTopicRequest extends BaseRequest
         return NULL;
     }
 }
-?>

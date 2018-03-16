@@ -2,7 +2,6 @@
 namespace AliyunMNS\Exception;
 
 use AliyunMNS\Constants;
-use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Model\DeleteMessageErrorItem;
 
 /**
@@ -31,5 +30,3 @@ class BatchDeleteFailException extends MnsException
         return $this->deleteMessageErrorItems;
     }
 }
-
-?>

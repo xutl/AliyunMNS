@@ -1,9 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
-
 class ChangeMessageVisibilityRequest extends BaseRequest
 {
     private $queueName;
@@ -44,4 +41,3 @@ class ChangeMessageVisibilityRequest extends BaseRequest
         return http_build_query(array("receiptHandle" => $this->receiptHandle, "visibilityTimeout" => $this->visibilityTimeout));
     }
 }
-?>

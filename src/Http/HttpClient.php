@@ -23,12 +23,11 @@ class HttpClient
     private $securityToken;
     private $requestTimeout;
     private $connectTimeout;
+    private $endpoint;
 
-    public function __construct($endPoint, $accessId,
-        $accessKey, $securityToken = NULL, Config $config = NULL)
+    public function __construct($endPoint, $accessId, $accessKey, $securityToken = NULL, Config $config = NULL)
     {
-        if ($config == NULL)
-        {
+        if ($config == NULL) {
             $config = new Config;
         }
         $this->accessId = $accessId;
@@ -60,7 +59,9 @@ class HttpClient
         return $this->accountId;
     }
 
-    // This function is for SDK internal use
+    /**
+     * 解析接入点
+     */
     private function parseEndpoint()
     {
         $pieces = explode("//", $this->endpoint);
@@ -72,6 +73,9 @@ class HttpClient
         $this->region = $region_pieces[0];
     }
 
+    /**
+     * @param BaseRequest $request
+     */
     private function addRequiredHeaders(BaseRequest &$request)
     {
         $body = $request->generateBody();
@@ -80,19 +84,16 @@ class HttpClient
         $request->setBody($body);
         $request->setQueryString($queryString);
 
-        if ($body != NULL)
-        {
+        if ($body != NULL) {
             $request->setHeader(Constants::CONTENT_LENGTH, strlen($body));
         }
         $request->setHeader('Date', gmdate(Constants::GMT_DATE_FORMAT));
-        if (!$request->isHeaderSet(Constants::CONTENT_TYPE))
-        {
+        if (!$request->isHeaderSet(Constants::CONTENT_TYPE)) {
             $request->setHeader(Constants::CONTENT_TYPE, 'text/xml');
         }
         $request->setHeader(Constants::MNS_VERSION_HEADER, Constants::MNS_VERSION);
 
-        if ($this->securityToken != NULL)
-        {
+        if ($this->securityToken != NULL) {
             $request->setHeader(Constants::SECURITY_TOKEN, $this->securityToken);
         }
 
@@ -101,19 +102,35 @@ class HttpClient
             Constants::MNS . " " . $this->accessId . ":" . $sign);
     }
 
-    public function sendRequestAsync(BaseRequest $request,
-        BaseResponse &$response, AsyncCallback $callback = NULL)
+    /**
+     * @param BaseRequest $request
+     * @param BaseResponse $response
+     * @param AsyncCallback|NULL $callback
+     * @return MnsPromise
+     */
+    public function sendRequestAsync(BaseRequest $request, BaseResponse &$response, AsyncCallback $callback = NULL)
     {
         $promise = $this->sendRequestAsyncInternal($request, $response, $callback);
         return new MnsPromise($promise, $response);
     }
 
+    /**
+     * @param BaseRequest $request
+     * @param BaseResponse $response
+     * @return BaseResponse
+     */
     public function sendRequest(BaseRequest $request, BaseResponse &$response)
     {
         $promise = $this->sendRequestAsync($request, $response);
         return $promise->wait();
     }
 
+    /**
+     * @param BaseRequest $request
+     * @param BaseResponse $response
+     * @param AsyncCallback|NULL $callback
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
     private function sendRequestAsyncInternal(BaseRequest &$request, BaseResponse &$response, AsyncCallback $callback = NULL)
     {
         $this->addRequiredHeaders($request);
@@ -133,12 +150,10 @@ class HttpClient
 
         $request = new Request(strtoupper($request->getMethod()),
             $request->getResourcePath(), $request->getHeaders());
-        try
-        {
-            if ($callback != NULL)
-            {
+        try {
+            if ($callback != NULL) {
                 return $this->client->sendAsync($request, $parameters)->then(
-                    function ($res) use (&$response, $callback) {
+                    function (ResponseInterface $res) use (&$response, $callback) {
                         try {
                             $response->parseResponse($res->getStatusCode(), $res->getBody());
                             $callback->onSucceed($response);
@@ -147,14 +162,10 @@ class HttpClient
                         }
                     }
                 );
-            }
-            else
-            {
+            } else {
                 return $this->client->sendAsync($request, $parameters);
             }
-        }
-        catch (TransferException $e)
-        {
+        } catch (TransferException $e) {
             $message = $e->getMessage();
             if ($e->hasResponse()) {
                 $message = $e->getResponse()->getBody();
@@ -163,5 +174,3 @@ class HttpClient
         }
     }
 }
-
-?>

@@ -5,7 +5,6 @@ use AliyunMNS\Constants;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\QueueNotExistException;
 use AliyunMNS\Exception\MessageNotExistException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 use AliyunMNS\Model\Message;
 
@@ -93,5 +92,3 @@ class BatchPeekMessageResponse extends BaseResponse
         }
     }
 }
-
-?>

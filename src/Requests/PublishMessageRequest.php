@@ -2,7 +2,6 @@
 namespace AliyunMNS\Requests;
 
 use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
 use AliyunMNS\Traits\MessagePropertiesForPublish;
 
 class PublishMessageRequest extends BaseRequest
@@ -49,5 +48,3 @@ class PublishMessageRequest extends BaseRequest
         return NULL;
     }
 }
-
-?>

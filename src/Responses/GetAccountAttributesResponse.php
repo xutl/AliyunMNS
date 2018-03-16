@@ -1,10 +1,8 @@
 <?php
 namespace AliyunMNS\Responses;
 
-use AliyunMNS\Constants;
 use AliyunMNS\Model\AccountAttributes;
 use AliyunMNS\Exception\MnsException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class GetAccountAttributesResponse extends BaseResponse
@@ -64,5 +62,3 @@ class GetAccountAttributesResponse extends BaseResponse
         }
     }
 }
-
-?>

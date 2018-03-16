@@ -1,10 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
-use AliyunMNS\Model\QueueAttributes;
-
 class DeleteQueueRequest extends BaseRequest
 {
     private $queueName;
@@ -30,4 +26,3 @@ class DeleteQueueRequest extends BaseRequest
         return NULL;
     }
 }
-?>

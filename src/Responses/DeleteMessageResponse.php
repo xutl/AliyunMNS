@@ -6,7 +6,6 @@ use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\QueueNotExistException;
 use AliyunMNS\Exception\InvalidArgumentException;
 use AliyunMNS\Exception\ReceiptHandleErrorException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class DeleteMessageResponse extends BaseResponse
@@ -60,5 +59,3 @@ class DeleteMessageResponse extends BaseResponse
         }
     }
 }
-
-?>

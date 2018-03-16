@@ -20,7 +20,7 @@ class UpdateSubscriptionAttributes
 
         $this->strategy = $strategy;
     }
-    
+
     public function getStrategy()
     {
         return $this->strategy;
@@ -48,11 +48,8 @@ class UpdateSubscriptionAttributes
 
     public function writeXML(\XMLWriter $xmlWriter)
     {
-        if ($this->strategy != NULL)
-        {
+        if ($this->strategy != NULL) {
             $xmlWriter->writeElement(Constants::STRATEGY, $this->strategy);
         }
     }
 }
-
-?>

@@ -5,7 +5,6 @@ use AliyunMNS\Constants;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\QueueNotExistException;
 use AliyunMNS\Exception\InvalidArgumentException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class SetQueueAttributeResponse extends BaseResponse
@@ -53,5 +52,3 @@ class SetQueueAttributeResponse extends BaseResponse
         }
     }
 }
-
-?>

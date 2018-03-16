@@ -1,11 +1,11 @@
 <?php
+
 namespace AliyunMNS\Responses;
 
 use AliyunMNS\Constants;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\SubscriptionNotExistException;
 use AliyunMNS\Exception\InvalidArgumentException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class SetSubscriptionAttributeResponse extends BaseResponse
@@ -31,27 +31,19 @@ class SetSubscriptionAttributeResponse extends BaseResponse
         try {
             $result = XMLParser::parseNormalError($xmlReader);
 
-            if ($result['Code'] == Constants::INVALID_ARGUMENT)
-            {
+            if ($result['Code'] == Constants::INVALID_ARGUMENT) {
                 throw new InvalidArgumentException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
             }
-            if ($result['Code'] == Constants::SUBSCRIPTION_NOT_EXIST)
-            {
+            if ($result['Code'] == Constants::SUBSCRIPTION_NOT_EXIST) {
                 throw new SubscriptionNotExistException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
             }
             throw new MnsException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             if ($exception != NULL) {
                 throw $exception;
-            }
-            elseif ($e instanceof MnsException)
-            {
+            } elseif ($e instanceof MnsException) {
                 throw $e;
-            }
-            else
-            {
+            } else {
                 throw new MnsException($statusCode, $e->getMessage());
             }
         } catch (\Throwable $t) {
@@ -59,5 +51,3 @@ class SetSubscriptionAttributeResponse extends BaseResponse
         }
     }
 }
-
-?>

@@ -2,7 +2,6 @@
 namespace AliyunMNS\Requests;
 
 use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
 use AliyunMNS\Model\UpdateSubscriptionAttributes;
 
 class SetSubscriptionAttributeRequest extends BaseRequest
@@ -42,5 +41,3 @@ class SetSubscriptionAttributeRequest extends BaseRequest
         return NULL;
     }
 }
-
-?>

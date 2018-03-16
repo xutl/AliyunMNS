@@ -2,7 +2,6 @@
 namespace AliyunMNS\Requests;
 
 use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
 use AliyunMNS\Model\TopicAttributes;
 
 class CreateTopicRequest extends BaseRequest
@@ -50,4 +49,3 @@ class CreateTopicRequest extends BaseRequest
         return NULL;
     }
 }
-?>

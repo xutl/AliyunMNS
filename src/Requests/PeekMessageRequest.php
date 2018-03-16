@@ -1,9 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
-
 class PeekMessageRequest extends BaseRequest
 {
     private $queueName;
@@ -30,4 +27,3 @@ class PeekMessageRequest extends BaseRequest
         return NULL;
     }
 }
-?>

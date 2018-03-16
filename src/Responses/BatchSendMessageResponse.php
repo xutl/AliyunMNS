@@ -7,10 +7,8 @@ use AliyunMNS\Exception\BatchSendFailException;
 use AliyunMNS\Exception\QueueNotExistException;
 use AliyunMNS\Exception\InvalidArgumentException;
 use AliyunMNS\Exception\MalformedXMLException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 use AliyunMNS\Model\SendMessageResponseItem;
-use AliyunMNS\Traits\MessageIdAndMD5;
 
 class BatchSendMessageResponse extends BaseResponse
 {
@@ -113,5 +111,3 @@ class BatchSendMessageResponse extends BaseResponse
         throw new MnsException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
     }
 }
-
-?>

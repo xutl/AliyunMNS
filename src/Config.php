@@ -70,5 +70,3 @@ class Config
         $this->expectContinue = $expectContinue;
     }
 }
-
-?>

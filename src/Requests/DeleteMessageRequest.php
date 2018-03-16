@@ -1,9 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
-
 class DeleteMessageRequest extends BaseRequest
 {
     private $queueName;
@@ -37,4 +34,3 @@ class DeleteMessageRequest extends BaseRequest
         return http_build_query(array("ReceiptHandle" => $this->receiptHandle));
     }
 }
-?>

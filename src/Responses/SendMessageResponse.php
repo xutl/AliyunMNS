@@ -1,4 +1,5 @@
 <?php
+
 namespace AliyunMNS\Responses;
 
 use AliyunMNS\Constants;
@@ -6,7 +7,6 @@ use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\QueueNotExistException;
 use AliyunMNS\Exception\InvalidArgumentException;
 use AliyunMNS\Exception\MalformedXMLException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 use AliyunMNS\Traits\MessageIdAndMD5;
 
@@ -44,23 +44,20 @@ class SendMessageResponse extends BaseResponse
         $xmlReader = $this->loadXmlContent($content);
         try {
             $result = XMLParser::parseNormalError($xmlReader);
-            if ($result['Code'] == Constants::QUEUE_NOT_EXIST)
-            {
+            if ($result['Code'] == Constants::QUEUE_NOT_EXIST) {
                 throw new QueueNotExistException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
             }
-            if ($result['Code'] == Constants::INVALID_ARGUMENT)
-            {
+            if ($result['Code'] == Constants::INVALID_ARGUMENT) {
                 throw new InvalidArgumentException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
             }
-            if ($result['Code'] == Constants::MALFORMED_XML)
-            {
+            if ($result['Code'] == Constants::MALFORMED_XML) {
                 throw new MalformedXMLException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
             }
             throw new MnsException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
         } catch (\Exception $e) {
             if ($exception != NULL) {
                 throw $exception;
-            } elseif($e instanceof MnsException) {
+            } elseif ($e instanceof MnsException) {
                 throw $e;
             } else {
                 throw new MnsException($statusCode, $e->getMessage());
@@ -70,5 +67,3 @@ class SendMessageResponse extends BaseResponse
         }
     }
 }
-
-?>

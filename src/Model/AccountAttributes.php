@@ -30,8 +30,7 @@ class AccountAttributes
 
     public function writeXML(\XMLWriter $xmlWriter)
     {
-        if ($this->loggingBucket !== NULL)
-        {
+        if ($this->loggingBucket !== NULL) {
             $xmlWriter->writeElement(Constants::LOGGING_BUCKET, $this->loggingBucket);
         }
     }
@@ -40,18 +39,15 @@ class AccountAttributes
     {
         $loggingBucket = NULL;
 
-        while ($xmlReader->read())
-        {
-            if ($xmlReader->nodeType == \XMLReader::ELEMENT)
-            {
+        while ($xmlReader->read()) {
+            if ($xmlReader->nodeType == \XMLReader::ELEMENT) {
                 switch ($xmlReader->name) {
-                case 'LoggingBucket':
-                    $xmlReader->read();
-                    if ($xmlReader->nodeType == \XMLReader::TEXT)
-                    {
-                        $loggingBucket = $xmlReader->value;
-                    }
-                    break;
+                    case 'LoggingBucket':
+                        $xmlReader->read();
+                        if ($xmlReader->nodeType == \XMLReader::TEXT) {
+                            $loggingBucket = $xmlReader->value;
+                        }
+                        break;
                 }
             }
         }
@@ -60,5 +56,3 @@ class AccountAttributes
         return $attributes;
     }
 }
-
-?>

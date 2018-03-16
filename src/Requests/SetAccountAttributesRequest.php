@@ -2,7 +2,6 @@
 namespace AliyunMNS\Requests;
 
 use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
 use AliyunMNS\Model\AccountAttributes;
 
 class SetAccountAttributesRequest extends BaseRequest
@@ -43,4 +42,3 @@ class SetAccountAttributesRequest extends BaseRequest
         return NULL;
     }
 }
-?>

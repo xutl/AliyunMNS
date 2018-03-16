@@ -71,5 +71,3 @@ abstract class BaseRequest
         return $this->method;
     }
 }
-
-?>

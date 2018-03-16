@@ -1,8 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Requests\BaseRequest;
-
 class GetQueueAttributeRequest extends BaseRequest
 {
     private $queueName;
@@ -29,4 +27,3 @@ class GetQueueAttributeRequest extends BaseRequest
         return NULL;
     }
 }
-?>

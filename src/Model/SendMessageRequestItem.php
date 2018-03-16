@@ -1,7 +1,6 @@
 <?php
 namespace AliyunMNS\Model;
 
-use AliyunMNS\Constants;
 use AliyunMNS\Traits\MessagePropertiesForSend;
 
 // this class is used for BatchSend
@@ -23,5 +22,3 @@ class SendMessageRequestItem
         $xmlWriter->endElement();
     }
 }
-
-?>

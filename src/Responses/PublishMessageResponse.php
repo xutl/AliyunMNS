@@ -6,7 +6,6 @@ use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\TopicNotExistException;
 use AliyunMNS\Exception\InvalidArgumentException;
 use AliyunMNS\Exception\MalformedXMLException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 use AliyunMNS\Traits\MessageIdAndMD5;
 
@@ -70,5 +69,3 @@ class PublishMessageResponse extends BaseResponse
         }
     }
 }
-
-?>

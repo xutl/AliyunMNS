@@ -1,6 +1,14 @@
 <?php
 namespace AliyunMNS;
 
+use AliyunMNS\Exception\BatchDeleteFailException;
+use AliyunMNS\Exception\BatchSendFailException;
+use AliyunMNS\Exception\InvalidArgumentException;
+use AliyunMNS\Exception\MalformedXMLException;
+use AliyunMNS\Exception\MessageNotExistException;
+use AliyunMNS\Exception\MnsException;
+use AliyunMNS\Exception\QueueNotExistException;
+use AliyunMNS\Exception\ReceiptHandleErrorException;
 use AliyunMNS\Http\HttpClient;
 use AliyunMNS\AsyncCallback;
 use AliyunMNS\Model\QueueAttributes;
@@ -61,7 +69,7 @@ class Queue
      * Set the QueueAttributes, detail API sepcs:
      * https://docs.aliyun.com/?spm=#/pub/mns/api_reference/api_spec&queue_operation
      *
-     * @param QueueAttributes $attributes: the QueueAttributes to set
+     * @param QueueAttributes $attributes : the QueueAttributes to set
      *
      * @return SetQueueAttributeResponse: the response
      *
@@ -77,7 +85,7 @@ class Queue
     }
 
     public function setAttributeAsync(QueueAttributes $attributes,
-        AsyncCallback $callback = NULL)
+                                      AsyncCallback $callback = NULL)
     {
         $request = new SetQueueAttributeRequest($this->queueName, $attributes);
         $response = new SetQueueAttributeResponse();
@@ -133,7 +141,7 @@ class Queue
     }
 
     public function sendMessageAsync(SendMessageRequest $request,
-        AsyncCallback $callback = NULL)
+                                     AsyncCallback $callback = NULL)
     {
         $request->setQueueName($this->queueName);
         $request->setBase64($this->base64);
@@ -172,7 +180,7 @@ class Queue
      * detail API sepcs:
      * https://docs.aliyun.com/?spm=#/pub/mns/api_reference/api_spec&message_operation
      *
-     * @param waitSeconds: the long polling waitseconds
+     * @param int $waitSeconds : the long polling waitseconds
      *
      * @return ReceiveMessageResponse: containing the messageBody and properties
      *          the response is same as PeekMessageResponse,
@@ -201,7 +209,7 @@ class Queue
      * detail API sepcs:
      * https://docs.aliyun.com/?spm=#/pub/mns/api_reference/api_spec&message_operation
      *
-     * @param $receiptHandle: the receiptHandle returned from receiveMessage
+     * @param $receiptHandle : the receiptHandle returned from receiveMessage
      *
      * @return ReceiveMessageResponse
      *
@@ -217,8 +225,7 @@ class Queue
         return $this->client->sendRequest($request, $response);
     }
 
-    public function deleteMessageAsync($receiptHandle,
-        AsyncCallback $callback = NULL)
+    public function deleteMessageAsync($receiptHandle, AsyncCallback $callback = NULL)
     {
         $request = new DeleteMessageRequest($this->queueName, $receiptHandle);
         $response = new DeleteMessageResponse();
@@ -230,7 +237,7 @@ class Queue
      * detail API sepcs:
      * https://docs.aliyun.com/?spm=#/pub/mns/api_reference/api_spec&message_operation
      *
-     * @param $receiptHandle: the receiptHandle returned from receiveMessage
+     * @param $receiptHandle : the receiptHandle returned from receiveMessage
      *
      * @return ChangeMessageVisibilityResponse
      *
@@ -275,7 +282,7 @@ class Queue
     }
 
     public function batchSendMessageAsync(BatchSendMessageRequest $request,
-        AsyncCallback $callback = NULL)
+                                          AsyncCallback $callback = NULL)
     {
         $request->setQueueName($this->queueName);
         $request->setBase64($this->base64);
@@ -289,8 +296,7 @@ class Queue
      * detail API sepcs:
      * https://docs.aliyun.com/?spm=#/pub/mns/api_reference/api_spec&message_operation
      *
-     * @param BatchReceiveMessageRequest:
-     *            containing numOfMessages and waitSeconds
+     * @param BatchReceiveMessageRequest $request containing numOfMessages and waitSeconds
      *
      * @return BatchReceiveMessageResponse:
      *            the received messages
@@ -348,7 +354,7 @@ class Queue
      * detail API sepcs:
      * https://docs.aliyun.com/?spm=#/pub/mns/api_reference/api_spec&message_operation
      *
-     * @param $receiptHandles:
+     * @param $receiptHandles :
      *            array of $receiptHandle, which is got from receiveMessage
      *
      * @return BatchDeleteMessageResponse
@@ -373,5 +379,3 @@ class Queue
         return $this->client->sendRequestAsync($request, $response, $callback);
     }
 }
-
-?>

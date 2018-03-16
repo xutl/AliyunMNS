@@ -1,10 +1,11 @@
 <?php
 namespace AliyunMNS;
 
-use AliyunMNS\Queue;
-use AliyunMNS\Config;
+use AliyunMNS\Exception\InvalidArgumentException;
+use AliyunMNS\Exception\MnsException;
+use AliyunMNS\Exception\QueueAlreadyExistException;
+use AliyunMNS\Exception\TopicAlreadyExistException;
 use AliyunMNS\Http\HttpClient;
-use AliyunMNS\AsyncCallback;
 use AliyunMNS\Model\AccountAttributes;
 use AliyunMNS\Requests\CreateQueueRequest;
 use AliyunMNS\Responses\CreateQueueResponse;
@@ -35,16 +36,13 @@ class Client
     /**
      * Please refer to http://www.aliyun.com/product/mns for more details
      *
-     * @param endPoint: the host url
-     *               could be "http://$accountId.mns.cn-hangzhou.aliyuncs.com"
-     *               accountId could be found in aliyun.com
-     * @param accessId: accessId from aliyun.com
-     * @param accessKey: accessKey from aliyun.com
-     * @param securityToken: securityToken from aliyun.com
-     * @param config: necessary configs
+     * @param string $endPoint : the host url
+     * @param string $accessId : accessId from aliyun.com
+     * @param string $accessKey : accessKey from aliyun.com
+     * @param string $securityToken : securityToken from aliyun.com
+     * @param Config $config : necessary configs
      */
-    public function __construct($endPoint, $accessId,
-        $accessKey, $securityToken = NULL, Config $config = NULL)
+    public function __construct($endPoint, $accessId, $accessKey, $securityToken = NULL, Config $config = NULL)
     {
         $this->client = new HttpClient($endPoint, $accessId,
             $accessKey, $securityToken, $config);
@@ -54,8 +52,8 @@ class Client
      * Returns a queue reference for operating on the queue
      * this function does not create the queue automatically.
      *
-     * @param string $queueName:  the queue name
-     * @param bool $base64: whether the message in queue will be base64 encoded
+     * @param string $queueName :  the queue name
+     * @param bool $base64 : whether the message in queue will be base64 encoded
      *
      * @return Queue $queue: the Queue instance
      */
@@ -67,7 +65,7 @@ class Client
     /**
      * Create Queue and Returns the Queue reference
      *
-     * @param CreateQueueRequest $request:  the QueueName and QueueAttributes
+     * @param CreateQueueRequest $request :  the QueueName and QueueAttributes
      *
      * @return CreateQueueResponse $response: the CreateQueueResponse
      *
@@ -85,15 +83,14 @@ class Client
      * Create Queue and Returns the Queue reference
      * The request will not be sent until calling MnsPromise->wait();
      *
-     * @param CreateQueueRequest $request:  the QueueName and QueueAttributes
-     * @param AsyncCallback $callback:  the Callback when the request finishes
+     * @param CreateQueueRequest $request :  the QueueName and QueueAttributes
+     * @param AsyncCallback $callback :  the Callback when the request finishes
      *
-     * @return MnsPromise $promise: the MnsPromise instance
+     * @return Responses\MnsPromise $promise: the MnsPromise instance
      *
-     * @throws MnsException if any exception happends
      */
     public function createQueueAsync(CreateQueueRequest $request,
-        AsyncCallback $callback = NULL)
+                                     AsyncCallback $callback = NULL)
     {
         $response = new CreateQueueResponse($request->getQueueName());
         return $this->client->sendRequestAsync($request, $response, $callback);
@@ -102,7 +99,7 @@ class Client
     /**
      * Query the queues created by current account
      *
-     * @param ListQueueRequest $request: define filters for quering queues
+     * @param ListQueueRequest $request : define filters for quering queues
      *
      * @return ListQueueResponse: the response containing queueNames
      */
@@ -113,7 +110,7 @@ class Client
     }
 
     public function listQueueAsync(ListQueueRequest $request,
-        AsyncCallback $callback = NULL)
+                                   AsyncCallback $callback = NULL)
     {
         $response = new ListQueueResponse();
         return $this->client->sendRequestAsync($request, $response, $callback);
@@ -123,7 +120,7 @@ class Client
      * Delete the specified queue
      * the request will succeed even when the queue does not exist
      *
-     * @param $queueName: the queueName
+     * @param $queueName : the queueName
      *
      * @return DeleteQueueResponse
      */
@@ -135,7 +132,7 @@ class Client
     }
 
     public function deleteQueueAsync($queueName,
-        AsyncCallback $callback = NULL)
+                                     AsyncCallback $callback = NULL)
     {
         $request = new DeleteQueueRequest($queueName);
         $response = new DeleteQueueResponse();
@@ -143,11 +140,12 @@ class Client
     }
 
     // API for Topic
+
     /**
      * Returns a topic reference for operating on the topic
      * this function does not create the topic automatically.
      *
-     * @param string $topicName:  the topic name
+     * @param string $topicName :  the topic name
      *
      * @return Topic $topic: the Topic instance
      */
@@ -159,7 +157,7 @@ class Client
     /**
      * Create Topic and Returns the Topic reference
      *
-     * @param CreateTopicRequest $request:  the TopicName and TopicAttributes
+     * @param CreateTopicRequest $request :  the TopicName and TopicAttributes
      *
      * @return CreateTopicResponse $response: the CreateTopicResponse
      *
@@ -177,7 +175,7 @@ class Client
      * Delete the specified topic
      * the request will succeed even when the topic does not exist
      *
-     * @param $topicName: the topicName
+     * @param $topicName : the topicName
      *
      * @return DeleteTopicResponse
      */
@@ -191,7 +189,7 @@ class Client
     /**
      * Query the topics created by current account
      *
-     * @param ListTopicRequest $request: define filters for quering topics
+     * @param ListTopicRequest $request : define filters for quering topics
      *
      * @return ListTopicResponse: the response containing topicNames
      */
@@ -224,7 +222,7 @@ class Client
     /**
      * Set the AccountAttributes
      *
-     * @param AccountAttributes $attributes: the AccountAttributes to set
+     * @param AccountAttributes $attributes : the AccountAttributes to set
      *
      * @return SetAccountAttributesResponse: the response
      *
@@ -238,12 +236,10 @@ class Client
     }
 
     public function setAccountAttributesAsync(AccountAttributes $attributes,
-        AsyncCallback $callback = NULL)
+                                              AsyncCallback $callback = NULL)
     {
         $request = new SetAccountAttributesRequest($attributes);
         $response = new SetAccountAttributesResponse();
         return $this->client->sendRequestAsync($request, $response, $callback);
     }
 }
-
-?>

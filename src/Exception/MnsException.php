@@ -61,5 +61,3 @@ class MnsException extends \RuntimeException
         return $this->hostId;
     }
 }
-
-?>

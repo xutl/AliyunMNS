@@ -3,20 +3,16 @@
 use AliyunMNS\Client;
 use AliyunMNS\Topic;
 use AliyunMNS\Constants;
-use AliyunMNS\AsyncCallback;
 use AliyunMNS\Model\TopicAttributes;
 use AliyunMNS\Model\MailAttributes;
 use AliyunMNS\Model\SmsAttributes;
 use AliyunMNS\Model\BatchSmsAttributes;
-// use AliyunMNS\Model\WebSocketAttributes;
 use AliyunMNS\Model\MessageAttributes;
 use AliyunMNS\Model\SubscriptionAttributes;
 use AliyunMNS\Model\UpdateSubscriptionAttributes;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Requests\CreateQueueRequest;
 use AliyunMNS\Requests\CreateTopicRequest;
-use AliyunMNS\Requests\GetTopicAttributeRequest;
-use AliyunMNS\Requests\SetTopicAttributeRequest;
 use AliyunMNS\Requests\PublishMessageRequest;
 
 class TopicTest extends \PHPUnit_Framework_TestCase
@@ -43,14 +39,10 @@ class TopicTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        foreach ($this->topicToDelete as $topicName)
-        {
-            try
-            {
+        foreach ($this->topicToDelete as $topicName) {
+            try {
                 $this->client->deleteTopic($topicName);
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
             }
         }
     }
@@ -59,13 +51,10 @@ class TopicTest extends \PHPUnit_Framework_TestCase
     {
         $request = new CreateTopicRequest($topicName, $attributes);
         $this->topicToDelete[] = $topicName;
-        try
-        {
+        try {
             $res = $this->client->createTopic($request);
             $this->assertTrue($res->isSucceed());
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
@@ -74,13 +63,10 @@ class TopicTest extends \PHPUnit_Framework_TestCase
 
     private function prepareSubscription(Topic $topic, $subscriptionName)
     {
-        try
-        {
+        try {
             $attributes = new SubscriptionAttributes($subscriptionName, 'http://127.0.0.1', 'BACKOFF_RETRY', 'XML');
             $topic->subscribe($attributes);
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
         }
     }
 
@@ -89,8 +75,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $topicName = "testLoggingEnabled";
         $topic = $this->prepareTopic($topicName);
 
-        try
-        {
+        try {
             $attributes = new TopicAttributes;
             $attributes->setLoggingEnabled(false);
             $topic->setAttribute($attributes);
@@ -110,9 +95,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
             $res = $topic->getAttribute();
             $this->assertTrue($res->isSucceed());
             $this->assertEquals(true, $res->getTopicAttributes()->getLoggingEnabled());
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
     }
@@ -122,60 +105,45 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $topicName = "testTopicAttributes";
         $topic = $this->prepareTopic($topicName);
 
-        try
-        {
+        try {
             $res = $topic->getAttribute();
             $this->assertTrue($res->isSucceed());
             $this->assertEquals($topicName, $res->getTopicAttributes()->getTopicName());
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
         $maximumMessageSize = 10 * 1024;
         $attributes = new TopicAttributes;
         $attributes->setMaximumMessageSize($maximumMessageSize);
-        try
-        {
+        try {
             $res = $topic->setAttribute($attributes);
             $this->assertTrue($res->isSucceed());
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
-        try
-        {
+        try {
             $res = $topic->getAttribute();
             $this->assertTrue($res->isSucceed());
             $this->assertEquals($res->getTopicAttributes()->getMaximumMessageSize(), $maximumMessageSize);
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
         $this->client->deleteTopic($topicName);
 
-        try
-        {
+        try {
             $res = $topic->getAttribute();
             $this->assertTrue(False, "Should throw TopicNotExistException");
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertEquals($e->getMnsErrorCode(), Constants::TOPIC_NOT_EXIST);
         }
 
-        try
-        {
+        try {
             $res = $topic->setAttribute($attributes);
             $this->assertTrue(False, "Should throw TopicNotExistException");
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertEquals($e->getMnsErrorCode(), Constants::TOPIC_NOT_EXIST);
         }
     }
@@ -189,25 +157,19 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $request = new PublishMessageRequest($messageBody);
 
         $topic = $this->prepareTopic($topicName);
-        try
-        {
+        try {
             $res = $topic->publishMessage($request);
             $this->assertTrue($res->isSucceed());
             $this->assertEquals(strtoupper($bodyMD5), $res->getMessageBodyMD5());
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
         $this->client->deleteTopic($topic->getTopicName());
-        try
-        {
+        try {
             $res = $topic->publishMessage($request);
             $this->assertTrue(False, "Should throw TopicNotExistException");
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertEquals($e->getMnsErrorCode(), Constants::TOPIC_NOT_EXIST);
         }
     }
@@ -221,8 +183,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $bodyMD5 = md5($messageBody);
 
         $topic = $this->prepareTopic($topicName);
-        try
-        {
+        try {
             $smsEndpoint = $topic->generateSmsEndpoint();
 
             $subscriptionName = 'testSubscribeSubscription' . uniqid();
@@ -239,9 +200,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(strtoupper($bodyMD5), $res->getMessageBodyMD5());
             echo $res->getMessageId();
             sleep(5);
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
@@ -257,8 +216,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $bodyMD5 = md5($messageBody);
 
         $topic = $this->prepareTopic($topicName);
-        try
-        {
+        try {
             $smsEndpoint = $topic->generateSmsEndpoint();
 
             $subscriptionName = 'testSubscribeSubscription' . uniqid();
@@ -275,9 +233,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(strtoupper($bodyMD5), $res->getMessageBodyMD5());
             echo $res->getMessageId();
             sleep(5);
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
@@ -293,8 +249,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $bodyMD5 = md5($messageBody);
 
         $topic = $this->prepareTopic($topicName);
-        try
-        {
+        try {
             $mailEndpoint = $topic->generateMailEndpoint("liji.canglj@alibaba-inc.com");
 
             $subscriptionName = 'testSubscribeSubscription' . uniqid();
@@ -310,9 +265,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(strtoupper($bodyMD5), $res->getMessageBodyMD5());
             echo $res->getMessageId();
             sleep(5);
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
@@ -334,8 +287,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $bodyMD5 = md5($messageBody);
 
         $topic = $this->prepareTopic($topicName);
-        try
-        {
+        try {
             $queue = $this->client->getQueueRef($queueName, FALSE);
 
             $queueEndpoint = $topic->generateQueueEndpoint($queueName);
@@ -353,9 +305,7 @@ class TopicTest extends \PHPUnit_Framework_TestCase
 
             $res = $queue->receiveMessage(30);
             $this->assertTrue(strpos($res->getMessageBody(), "<Message>" . $messageBody . "</Message>") >= 0);
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
@@ -370,23 +320,17 @@ class TopicTest extends \PHPUnit_Framework_TestCase
 
         $subscriptionName = 'testSubscribeSubscription' . uniqid();
         $attributes = new SubscriptionAttributes($subscriptionName, 'http://127.0.0.1', 'BACKOFF_RETRY', 'XML');
-        try
-        {
+        try {
             $topic->subscribe($attributes);
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
-        try
-        {
+        try {
             $attributes->setContentFormat('SIMPLIFIED');
             $res = $topic->subscribe($attributes);
             $this->assertTrue(False, "Should throw SubscriptionAlreadyExist");
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertEquals($e->getMnsErrorCode(), Constants::SUBSCRIPTION_ALREADY_EXIST);
         }
 
@@ -400,61 +344,46 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $topic = $this->prepareTopic($topicName);
         $this->prepareSubscription($topic, $subscriptionName);
 
-        try
-        {
+        try {
             $res = $topic->getSubscriptionAttribute($subscriptionName);
             $this->assertTrue($res->isSucceed());
             $this->assertEquals($topicName, $res->getSubscriptionAttributes()->getTopicName());
             $this->assertEquals('BACKOFF_RETRY', $res->getSubscriptionAttributes()->getStrategy());
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
         $strategy = 'EXPONENTIAL_DECAY_RETRY';
         $attributes = new UpdateSubscriptionAttributes($subscriptionName);
         $attributes->setStrategy($strategy);
-        try
-        {
+        try {
             $res = $topic->setSubscriptionAttribute($attributes);
             $this->assertTrue($res->isSucceed());
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
-        try
-        {
+        try {
             $res = $topic->getSubscriptionAttribute($subscriptionName);
             $this->assertTrue($res->isSucceed());
             $this->assertEquals($res->getSubscriptionAttributes()->getStrategy(), $strategy);
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertTrue(FALSE, $e);
         }
 
         $topic->unsubscribe($subscriptionName);
 
-        try
-        {
+        try {
             $res = $topic->getSubscriptionAttribute($subscriptionName);
             $this->assertTrue(False, "Should throw SubscriptionNotExistException");
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertEquals($e->getMnsErrorCode(), Constants::SUBSCRIPTION_NOT_EXIST);
         }
 
-        try
-        {
+        try {
             $res = $topic->setSubscriptionAttribute($attributes);
             $this->assertTrue(False, "Should throw SubscriptionNotExistException");
-        }
-        catch (MnsException $e)
-        {
+        } catch (MnsException $e) {
             $this->assertEquals($e->getMnsErrorCode(), Constants::SUBSCRIPTION_NOT_EXIST);
         }
     }
@@ -478,36 +407,26 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $count = 0;
         $marker = '';
         while ($count < 2) {
-            try
-            {
+            try {
                 $res = $topic->listSubscription(1, $subscriptionNamePrefix, $marker);
                 $this->assertTrue($res->isSucceed());
 
                 $subscriptionNames = $res->getSubscriptionNames();
-                foreach ($subscriptionNames as $subscriptionName)
-                {
-                    if ($subscriptionName == $subscriptionName1)
-                    {
+                foreach ($subscriptionNames as $subscriptionName) {
+                    if ($subscriptionName == $subscriptionName1) {
                         $subscriptionName1Found = TRUE;
-                    }
-                    elseif ($subscriptionName == $subscriptionName2)
-                    {
+                    } elseif ($subscriptionName == $subscriptionName2) {
                         $subscriptionName2Found = TRUE;
-                    }
-                    else
-                    {
+                    } else {
                         $this->assertTrue(FALSE, $subscriptionName . " Should not be here.");
                     }
                 }
 
-                if ($count > 0)
-                {
+                if ($count > 0) {
                     $this->assertTrue($res->isFinished(), implode(", ", $subscriptionNames));
                 }
                 $marker = $res->getNextMarker();
-            }
-            catch (MnsException $e)
-            {
+            } catch (MnsException $e) {
                 $this->assertTrue(FALSE, $e);
             }
             $count += 1;
@@ -517,5 +436,3 @@ class TopicTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($subscriptionName2Found, $subscriptionName2 . " Not Found!");
     }
 }
-
-?>

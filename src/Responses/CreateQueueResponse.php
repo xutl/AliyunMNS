@@ -5,7 +5,6 @@ use AliyunMNS\Constants;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\QueueAlreadyExistException;
 use AliyunMNS\Exception\InvalidArgumentException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class CreateQueueResponse extends BaseResponse
@@ -62,5 +61,3 @@ class CreateQueueResponse extends BaseResponse
         return $this->queueName;
     }
 }
-
-?>

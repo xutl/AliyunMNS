@@ -2,8 +2,6 @@
 namespace AliyunMNS\Requests;
 
 use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
-use AliyunMNS\Model\QueueAttributes;
 use AliyunMNS\Traits\MessagePropertiesForSend;
 
 class SendMessageRequest extends BaseRequest
@@ -64,4 +62,3 @@ class SendMessageRequest extends BaseRequest
         return NULL;
     }
 }
-?>

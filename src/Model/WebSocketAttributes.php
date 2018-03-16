@@ -29,5 +29,3 @@ class WebSocketAttributes
         $xmlWriter->writeElement(Constants::WEBSOCKET, json_encode($jsonArray));
     }
 }
-
-?>

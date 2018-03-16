@@ -1,4 +1,5 @@
 <?php
+
 namespace AliyunMNS;
 
 use AliyunMNS\Http\HttpClient;
@@ -65,12 +66,9 @@ class Topic
 
     public function generateSmsEndpoint($phone = null)
     {
-        if ($phone)
-        {
+        if ($phone) {
             return "sms:directsms:" . $phone;
-        }
-        else
-        {
+        } else {
             return "sms:directsms:anonymous";
         }
     }
@@ -124,5 +122,3 @@ class Topic
         return $this->client->sendRequest($request, $response);
     }
 }
-
-?>

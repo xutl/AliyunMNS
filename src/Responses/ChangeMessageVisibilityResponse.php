@@ -7,7 +7,6 @@ use AliyunMNS\Exception\QueueNotExistException;
 use AliyunMNS\Exception\MessageNotExistException;
 use AliyunMNS\Exception\InvalidArgumentException;
 use AliyunMNS\Exception\ReceiptHandleErrorException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 use AliyunMNS\Model\Message;
 
@@ -92,5 +91,3 @@ class ChangeMessageVisibilityResponse extends BaseResponse
 
     }
 }
-
-?>

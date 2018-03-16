@@ -1,8 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Requests\BaseRequest;
-
 class GetAccountAttributesRequest extends BaseRequest
 {
     public function __construct()
@@ -20,4 +18,3 @@ class GetAccountAttributesRequest extends BaseRequest
         return NULL;
     }
 }
-?>

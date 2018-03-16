@@ -17,7 +17,7 @@ class SmsAttributes
     public $receiver;
 
     public function __construct(
-        $freeSignName, $templateCode, $smsParams=array(), $receiver=null)
+        $freeSignName, $templateCode, $smsParams = array(), $receiver = null)
     {
         $this->freeSignName = $freeSignName;
         $this->templateCode = $templateCode;
@@ -68,33 +68,25 @@ class SmsAttributes
     public function writeXML(\XMLWriter $xmlWriter)
     {
         $jsonArray = array();
-        if ($this->freeSignName !== NULL)
-        {
+        if ($this->freeSignName !== NULL) {
             $jsonArray[Constants::FREE_SIGN_NAME] = $this->freeSignName;
         }
-        if ($this->templateCode !== NULL)
-        {
+        if ($this->templateCode !== NULL) {
             $jsonArray[Constants::TEMPLATE_CODE] = $this->templateCode;
         }
-        if ($this->receiver !== NULL)
-        {
+        if ($this->receiver !== NULL) {
             $jsonArray[Constants::RECEIVER] = $this->receiver;
         }
 
-        if ($this->smsParams !== null)
-        {
-            if (!is_array($this->smsParams))
-            {
+        if ($this->smsParams !== null) {
+            if (!is_array($this->smsParams)) {
                 throw new MnsException(400, "SmsParams should be an array!");
             }
             $jsonArray[Constants::SMS_PARAMS] = json_encode($this->smsParams, JSON_FORCE_OBJECT);
         }
 
-        if (!empty($jsonArray))
-        {
+        if (!empty($jsonArray)) {
             $xmlWriter->writeElement(Constants::DIRECT_SMS, json_encode($jsonArray));
         }
     }
 }
-
-?>

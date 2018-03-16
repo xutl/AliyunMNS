@@ -1,8 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Requests\BaseRequest;
-
 class ListQueueRequest extends BaseRequest
 {
     private $retNum;
@@ -82,5 +80,3 @@ class ListQueueRequest extends BaseRequest
         return NULL;
     }
 }
-
-?>

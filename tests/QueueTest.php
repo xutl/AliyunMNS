@@ -2,18 +2,14 @@
 
 use AliyunMNS\Client;
 use AliyunMNS\Constants;
-use AliyunMNS\AsyncCallback;
 use AliyunMNS\Model\QueueAttributes;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\BatchSendFailException;
 use AliyunMNS\Exception\BatchDeleteFailException;
 use AliyunMNS\Requests\CreateQueueRequest;
-use AliyunMNS\Requests\GetQueueAttributeRequest;
-use AliyunMNS\Requests\SetQueueAttributeRequest;
 use AliyunMNS\Requests\SendMessageRequest;
 use AliyunMNS\Requests\BatchSendMessageRequest;
 use AliyunMNS\Requests\BatchReceiveMessageRequest;
-use AliyunMNS\Requests\BatchPeekMessageRequest;
 use AliyunMNS\Model\SendMessageRequestItem;
 
 class QueueTest extends \PHPUnit_Framework_TestCase
@@ -489,5 +485,3 @@ class QueueTest extends \PHPUnit_Framework_TestCase
         }
     }
 }
-
-?>

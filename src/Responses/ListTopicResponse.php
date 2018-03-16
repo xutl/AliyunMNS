@@ -2,7 +2,6 @@
 namespace AliyunMNS\Responses;
 
 use AliyunMNS\Exception\MnsException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class ListTopicResponse extends BaseResponse
@@ -120,5 +119,3 @@ class ListTopicResponse extends BaseResponse
         }
     }
 }
-
-?>

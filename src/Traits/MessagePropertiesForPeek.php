@@ -1,4 +1,5 @@
 <?php
+
 namespace AliyunMNS\Traits;
 
 use AliyunMNS\Constants;
@@ -59,5 +60,3 @@ trait MessagePropertiesForPeek
         $this->priority = $message->getPriority();
     }
 }
-
-?>

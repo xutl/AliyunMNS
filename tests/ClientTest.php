@@ -10,8 +10,6 @@ use AliyunMNS\Requests\CreateQueueRequest;
 use AliyunMNS\Requests\CreateTopicRequest;
 use AliyunMNS\Requests\ListQueueRequest;
 use AliyunMNS\Requests\ListTopicRequest;
-use AliyunMNS\Requests\SetAccountAttributesRequest;
-use AliyunMNS\Requests\GetAccountAttributesRequest;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -533,5 +531,3 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($topicName2Found, $topicName2 . " Not Found!");
     }
 }
-
-?>

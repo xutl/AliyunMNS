@@ -1,9 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
-
 class BatchReceiveMessageRequest extends BaseRequest
 {
     private $queueName;
@@ -55,4 +52,3 @@ class BatchReceiveMessageRequest extends BaseRequest
         return http_build_query($params);
     }
 }
-?>

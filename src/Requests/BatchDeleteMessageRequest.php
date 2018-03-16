@@ -2,7 +2,6 @@
 namespace AliyunMNS\Requests;
 
 use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
 
 class BatchDeleteMessageRequest extends BaseRequest
 {
@@ -47,4 +46,3 @@ class BatchDeleteMessageRequest extends BaseRequest
         return NULL;
     }
 }
-?>

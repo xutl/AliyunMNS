@@ -1,8 +1,8 @@
 <?php
+
 namespace AliyunMNS\Responses;
 
 use AliyunMNS\Exception\MnsException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class ListQueueResponse extends BaseResponse
@@ -43,26 +43,22 @@ class ListQueueResponse extends BaseResponse
         $xmlReader = $this->loadXmlContent($content);
 
         try {
-            while ($xmlReader->read())
-            {
-                if ($xmlReader->nodeType == \XMLReader::ELEMENT)
-                {
+            while ($xmlReader->read()) {
+                if ($xmlReader->nodeType == \XMLReader::ELEMENT) {
                     switch ($xmlReader->name) {
-                    case 'QueueURL':
-                        $xmlReader->read();
-                        if ($xmlReader->nodeType == \XMLReader::TEXT)
-                        {
-                            $queueName = $this->getQueueNameFromQueueURL($xmlReader->value);
-                            $this->queueNames[] = $queueName;
-                        }
-                        break;
-                    case 'NextMarker':
-                        $xmlReader->read();
-                        if ($xmlReader->nodeType == \XMLReader::TEXT)
-                        {
-                            $this->nextMarker = $xmlReader->value;
-                        }
-                        break;
+                        case 'QueueURL':
+                            $xmlReader->read();
+                            if ($xmlReader->nodeType == \XMLReader::TEXT) {
+                                $queueName = $this->getQueueNameFromQueueURL($xmlReader->value);
+                                $this->queueNames[] = $queueName;
+                            }
+                            break;
+                        case 'NextMarker':
+                            $xmlReader->read();
+                            if ($xmlReader->nodeType == \XMLReader::TEXT) {
+                                $this->nextMarker = $xmlReader->value;
+                            }
+                            break;
                     }
                 }
             }
@@ -76,8 +72,7 @@ class ListQueueResponse extends BaseResponse
     private function getQueueNameFromQueueURL($queueURL)
     {
         $pieces = explode("/", $queueURL);
-        if (count($pieces) == 5)
-        {
+        if (count($pieces) == 5) {
             return $pieces[4];
         }
         return "";
@@ -95,7 +90,7 @@ class ListQueueResponse extends BaseResponse
         } catch (\Exception $e) {
             if ($exception != NULL) {
                 throw $exception;
-            } elseif($e instanceof MnsException) {
+            } elseif ($e instanceof MnsException) {
                 throw $e;
             } else {
                 throw new MnsException($statusCode, $e->getMessage());
@@ -105,5 +100,3 @@ class ListQueueResponse extends BaseResponse
         }
     }
 }
-
-?>

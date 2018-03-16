@@ -29,4 +29,3 @@ class GetTopicAttributeRequest extends BaseRequest
         return NULL;
     }
 }
-?>

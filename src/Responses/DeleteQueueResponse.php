@@ -2,7 +2,6 @@
 namespace AliyunMNS\Responses;
 
 use AliyunMNS\Exception\MnsException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class DeleteQueueResponse extends BaseResponse
@@ -42,5 +41,3 @@ class DeleteQueueResponse extends BaseResponse
         }
     }
 }
-
-?>

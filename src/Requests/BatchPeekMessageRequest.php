@@ -1,14 +1,10 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Constants;
-use AliyunMNS\Requests\BaseRequest;
-
 class BatchPeekMessageRequest extends BaseRequest
 {
     private $queueName;
     private $numOfMessages;
-    private $waitSeconds;
 
     public function __construct($queueName, $numOfMessages)
     {
@@ -38,4 +34,3 @@ class BatchPeekMessageRequest extends BaseRequest
         return http_build_query(array("numOfMessages" => $this->numOfMessages, "peekonly" => "true"));
     }
 }
-?>

@@ -216,5 +216,3 @@ class SubscriptionAttributes
         return $attributes;
     }
 }
-
-?>

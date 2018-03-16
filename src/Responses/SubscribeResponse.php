@@ -1,11 +1,11 @@
 <?php
+
 namespace AliyunMNS\Responses;
 
 use AliyunMNS\Constants;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\SubscriptionAlreadyExistException;
 use AliyunMNS\Exception\InvalidArgumentException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class SubscribeResponse extends BaseResponse
@@ -13,12 +13,9 @@ class SubscribeResponse extends BaseResponse
     public function parseResponse($statusCode, $content)
     {
         $this->statusCode = $statusCode;
-        if ($statusCode == 201 || $statusCode == 204)
-        {
+        if ($statusCode == 201 || $statusCode == 204) {
             $this->succeed = TRUE;
-        }
-        else
-        {
+        } else {
             $this->parseErrorResponse($statusCode, $content);
         }
     }
@@ -27,40 +24,26 @@ class SubscribeResponse extends BaseResponse
     {
         $this->succeed = FALSE;
         $xmlReader = $this->loadXmlContent($content);
-        try
-        {
+        try {
             $result = XMLParser::parseNormalError($xmlReader);
 
-            if ($result['Code'] == Constants::INVALID_ARGUMENT)
-            {
+            if ($result['Code'] == Constants::INVALID_ARGUMENT) {
                 throw new InvalidArgumentException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
             }
-            if ($result['Code'] == Constants::SUBSCRIPTION_ALREADY_EXIST)
-            {
+            if ($result['Code'] == Constants::SUBSCRIPTION_ALREADY_EXIST) {
                 throw new SubscriptionAlreadyExistException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
             }
             throw new MnsException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
-        }
-        catch (\Exception $e)
-        {
-            if ($exception != NULL)
-            {
+        } catch (\Exception $e) {
+            if ($exception != NULL) {
                 throw $exception;
-            }
-            elseif ($e instanceof MnsException)
-            {
+            } elseif ($e instanceof MnsException) {
                 throw $e;
-            }
-            else
-            {
+            } else {
                 throw new MnsException($statusCode, $e->getMessage());
             }
-        }
-        catch (\Throwable $t)
-        {
+        } catch (\Throwable $t) {
             throw new MnsException($statusCode, $t->getMessage());
         }
     }
 }
-
-?>

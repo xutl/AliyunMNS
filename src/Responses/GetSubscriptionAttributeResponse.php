@@ -5,7 +5,6 @@ use AliyunMNS\Constants;
 use AliyunMNS\Model\SubscriptionAttributes;
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Exception\SubscriptionNotExistException;
-use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
 class GetSubscriptionAttributeResponse extends BaseResponse
@@ -85,4 +84,3 @@ class GetSubscriptionAttributeResponse extends BaseResponse
         }
     }
 }
-?>

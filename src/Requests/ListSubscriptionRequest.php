@@ -1,8 +1,6 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Requests\BaseRequest;
-
 class ListSubscriptionRequest extends BaseRequest
 {
     private $topicName;
@@ -93,5 +91,3 @@ class ListSubscriptionRequest extends BaseRequest
         return NULL;
     }
 }
-
-?>

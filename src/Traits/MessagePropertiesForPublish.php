@@ -53,5 +53,3 @@ trait MessagePropertiesForPublish
         }
     }
 }
-
-?>
