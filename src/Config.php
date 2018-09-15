@@ -14,7 +14,7 @@ class Config
         // $this->maxAttempts = 3;
         $this->proxy = NULL;
         $this->requestTimeout = 35; // 35 seconds
-        $this->connectTimeout = 3;  // 3 seconds
+        $this->connectTimeout = 30;  // 30 seconds
         $this->expectContinue = false;
     }
 
